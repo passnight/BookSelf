@@ -7,15 +7,8 @@
 </template>
 
 <script>
-    import SystemInformation from './LandingPage/SystemInformation'
 export default {
-    name: 'test',
-    components: { SystemInformation },
-    methods: {
-        open (link) {
-          this.$electron.shell.openExternal(link)
-        }
-    }
+  name: 'test'
 }
 </script>
 

@@ -6,12 +6,7 @@
 
 <script>
 export default {
-  name: 'landing-page',
-  methods: {
-    open (link) {
-      this.$electron.shell.openExternal(link)
-    }
-  }
+  name: 'landing-page'
 }
 </script>
 
@@ -23,7 +18,6 @@ export default {
     background: url("../assets/main.png") no-repeat;
     width:100%;
 		height:100%;
-    min-width: 1000px;
     background-repeat: no-repeat;
     background-size: cover;
     -webkit-background-size: cover;

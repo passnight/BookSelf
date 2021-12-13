@@ -11,12 +11,7 @@
         <div id="title">Book Seller</div>
       </div>
 
-      <!-- 导航栏 -->
-      <nav class="nav">
-        <button id="mainButton">首页</button>
-        <button id="topicButton">主题</button>
-        <button id="searchButton">搜索</button>
-      </nav>  
+
     </div>
 
     
@@ -68,10 +63,7 @@
     text-align: center;
   }
 
-  .nav{
-    position: relative;
-    top:20px;
-  }
+
 
   .header{
 
