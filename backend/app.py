@@ -32,6 +32,48 @@ class UserController:
             return Response(code=400, data={"msg": "用户名或密码错误"}).toJson()
         else:
             return Response(code=200, data={"msg": "登录成功"}).toJson()
+    
+    
+    @app.route("/user/register", methods=["GET"])
+    def register():
+        cursor.execute(F"select * from user where username='{request.args['username']}'")
+        result = cursor.fetchone()
+        if(result != None):
+            return Response(code=400, data={"msg": "用户已存在"}).toJson()
+        cursor.execute(F"insert into user(username, password) values('{request.args['username']}', '{request.args['password']}')")
+        conn.commit()
+        return Response(code=200, data={"msg": "注册成功"}).toJson()
 
+class ShoppingBasketController:
+    @app.route("/shoppingBasket/add", methods=["GET"])
+    def add():
+        pass
+    
+    @app.route("/shoppingBasket/delete", methods=["GET"])
+    def delete():
+        pass
+    
+    @app.route("/shoppingBasket/get", methods=["GET"])
+    def get():
+        pass
+        @app.route("/shoppingBasket/abort", methods=["GET"])
+    def abort():
+        pass
+    
+    @app.route("/shoppingBasket/updateItem", methods=["GET"])
+    def updateItem():
+        pass
+    
+    @app.route("/shoppingBasket/deleteItem", methods=["GET"])
+    def deleteItem():
+        pass
+    
+    @app.route("/shoppingBasket/addItem", methods=["GET"])
+    def addItem():
+        pass
 
+class SearchController:
+    @app.route("/search/get", methods=["GET"])
+    def search():
+        pass
 app.run(port="8848")
