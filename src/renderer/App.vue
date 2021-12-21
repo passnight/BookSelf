@@ -7,14 +7,13 @@
 </template>
 
 <script>
-import myHead from './components/header.vue'
-import myNav from './components/nav.vue'
+import myHead from './components/Header'
+import myNav from './components/Nav'
 export default {
-  name: 'book seller',
-  components: { myHead, myNav }
+  name: 'bookShelf',
+  components: {myHead, myNav}
 }
 </script>
-
+  
 <style>
-  /* CSS */
 </style>

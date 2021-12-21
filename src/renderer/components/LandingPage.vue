@@ -1,6 +1,13 @@
 <template>
   <div>
-  <div class="mainBackground"></div>
+    <img class="mainBackground" src="~@/assets/main.png">
+    <div class="frame">
+      <h3>选择功能</h3>
+      <form>
+        <router-link to="/login"><button>登录</button></router-link>
+        <router-link to="/register"><button>注册</button></router-link>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -13,16 +20,36 @@ export default {
 <style>
 
 .mainBackground{
-  position:fixed;
+    position: relative;
+    width: 100%;
 
-    background: url("../assets/main.png") no-repeat;
-    width:100%;
-		height:100%;
-    background-repeat: no-repeat;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -o-background-size: cover;
-    background-position: center 0;
-  }
+}
 
+.frame {
+    position:absolute;
+    right:30px;
+    top:250px;
+    color:#63071c;
+    font-weight: bold;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 13px;
+    width: 60%;
+    height: 100px;
+    background-color: rgba(240, 255, 255, 0.3);
+ 
+    border-radius: 20px;
+    text-align: center;
+}
+
+.frame form{
+  padding: 10px;
+}
+
+
+.frame form button{
+  background-color: bisque;
+  font-weight: bold;
+  width: 100px;
+  height: 30px;
+}
 </style>

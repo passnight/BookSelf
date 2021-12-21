@@ -3,15 +3,16 @@
     <div class="topnav">
     <ul>
       <li><router-link to="/"><a href="#home" >主页</a></router-link></li>
-      <li><router-link to="/test"><a href="#news">搜索</a></router-link></li>
-      <li><router-link to=""><a href="#contact">222</a></router-link></li>
-      <li><router-link to=""><a href="#about">333</a></router-link></li>
+      <li><router-link to="/search"><a href="#news">搜索</a></router-link></li>
+      <li><router-link to="/shoppingCart"><a href="#contact">购物车</a></router-link></li>
+      <li><router-link to="/bookList"><a href="#about">书库列表</a></router-link></li>
     </ul>
   </div> 
 </template>
 
 <script>
 export default {
+  name: 'nav-page'
 
 }
 </script>

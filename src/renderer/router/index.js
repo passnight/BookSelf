@@ -15,9 +15,39 @@ export default new Router({
       redirect: '/main'
     },
     {
-      path: '/test',
-      name: 'test-page',
-      component: require('@/components/Test').default
+      path: '/search',
+      name: 'search-page',
+      component: require('@/components/SearchPage').default
+    },
+    {
+      path: '/login',
+      name: 'login-page',
+      component: require('@/components/LoginPage').default
+    },
+    {
+      path: '/register',
+      name: 'register-page',
+      component: require('@/components/RegisterPage').default
+    },
+    {
+      path: '/findPassword',
+      name: 'findPassword-page',
+      component: require('@/components/FindPasswordPage').default
+    },
+    {
+      path: '/bookList',
+      name: 'bookList-page',
+      component: require('@/components/BookListPage').default
+    },
+    {
+      path: '/bookDetail',
+      name: 'bookDetail-page',
+      component: require('@/components/BookDetailPage').default
+    },
+    {
+      path: '/shoppingCart',
+      name: 'shoppingCart-page',
+      component: require('@/components/ShoppingCartPage').default
     }
   ]
 })

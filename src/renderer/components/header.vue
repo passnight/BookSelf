@@ -8,7 +8,7 @@
       <!--顶部图片 logo-->
       <div id="header-content" style="display:flex">
         <img id="logo" src="~@/assets/logo.png">
-        <div id="title">Book Seller</div>
+        <div id="title">Book Shelf</div>
       </div>
 
 
