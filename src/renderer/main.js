@@ -8,9 +8,12 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
+axios.defaults.baseURL = 'http://localhost:8848'
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },
   router,
   template: '<App/>'
 }).$mount('#app')
+

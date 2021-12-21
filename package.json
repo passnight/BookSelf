@@ -54,7 +54,14 @@
     }
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^0.24.0",
+=======
+    "axios": "^0.18.1",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.3",
+    "typeorm": "^0.2.41",
+>>>>>>> 640a3599408aff95b98464a5ee689b3f8b025caa
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.0.1"

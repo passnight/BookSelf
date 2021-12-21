@@ -1,6 +1,9 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
+import initExpress from './Controller.ts'
+
+initExpress();
 
 /**
  * Set `__static` path to static files in production
@@ -15,7 +18,7 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
-function createWindow () {
+async function createWindow() {
   /**
    * Initial window options
    */
@@ -30,6 +33,8 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  // await init();
 }
 
 app.on('ready', createWindow)
