@@ -13,7 +13,7 @@
             <input  v-model="searchForm.email">
           </div>
          
-          <button class="search-btn" @click="search">submit
+          <button type="button" class="search-btn" @click="search">submit
             <span></span>
             <span></span>
             <span></span>
@@ -65,8 +65,8 @@ export default {
 	text-decoration: none;
 }
 
-input,
-button {
+.searchBox input,
+.searchBox button {
 	background: transparent;
 	border: 0;
 	outline: none;

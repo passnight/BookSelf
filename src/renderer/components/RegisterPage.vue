@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="search-body">
     <div class="registerBox">
 		<h2>register</h2>
 		<form action="">
@@ -15,7 +15,7 @@
 				<input type="password" required v-model="registerForm.password">
 				<label for="">password</label>
 			</div>
-			<button class="btn" @click="register">submit
+			<button class="btn" type="button" @click="register">submit
 				<span></span>
 				<span></span>
 				<span></span>
@@ -39,8 +39,7 @@ export default {
         username: '',
         password: '',
         email: ''
-      },
-      userToken: ''
+      }
     }
   },
   methods: {
@@ -65,7 +64,7 @@ export default {
         //   data: _this.loginForm
         // }).then(res => {
         //   console.log(res.data);
-        //   _this.userToken = 'Bearer ' + res.data.data.body.token;
+        //   _this.userToken = 'Bearer ' + res.data.data.search-body.token;
         //   // 将用户token保存到vuex中
         //   _this.changeLogin({ Authorization: _this.userToken });
         //   _this.$router.push('/home');
@@ -85,14 +84,14 @@ export default {
 	text-decoration: none;
 }
 
-input,
-button {
+.registerBox input,
+.registerBox button {
 	background: transparent;
 	border: 0;
 	outline: none;
 }
 
-.body {
+.search-body {
     height: 100%;
 	background: linear-gradient(#141e30, #243b55);
 	display: flex;

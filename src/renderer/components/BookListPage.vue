@@ -1,6 +1,7 @@
 <template>
   <div>
-  <h1>未找到相关书本</h1>
+  <h1>书库 && 搜索结果 页面</h1>
+  <router-link to="/bookDetail"><button type="button">前往详情页</button></router-link>
   </div>
 </template>
 

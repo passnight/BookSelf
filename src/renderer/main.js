@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import store from './store'
 
 import App from './App'
 import router from './router'
@@ -14,6 +15,21 @@ axios.defaults.baseURL = 'http://localhost:8848'
 new Vue({
   components: { App },
   router,
+  store,
   template: '<App/>'
 }).$mount('#app')
 
+router.beforeEach((to, from, next) => {
+  if( to.path === '/shoppingCart') {
+      var user = store.getters.user
+      if (user.userId === -1) {
+        alert('请先登录')
+        next('/login')
+      } else {
+        alert(user.userId)
+        next()
+      }
+  } else {
+    next()
+  }
+})

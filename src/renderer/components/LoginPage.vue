@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="login-body">
     <div class="loginBox">
 		<h2>login</h2>
 		<form action="">
@@ -11,7 +11,7 @@
 				<input type="password" required v-model="loginForm.login_password">
 				<label for="">password</label>
 			</div>
-			<button class="login-btn" @click="login">submit
+			<button type="button" class="login-btn" @click="login">submit
 				<span></span>
 				<span></span>
 				<span></span>
@@ -44,21 +44,22 @@ export default {
   },
   methods: {
     login () {
-      var passwordreg = /(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,16}/
+      var passwordreg = /^[a-zA-Z0-9]{8,32}$/
       if (this.loginForm.login_username === '') {
         alert('账号不能为空')
       } else if (this.loginForm.login_password === '') {
         alert('密码不能为空')
       } else if (!passwordreg.test(this.loginForm.login_password)) {
-        alert('密码只能由字母和数字组成')
+        alert('密码由8-32位数字和字母组成')
       } else {
+		alert('登陆成功')
         // this.axios({
         //   method: 'post',
         //   url: '/user/login',
         //   data: _this.loginForm
         // }).then(res => {
         //   console.log(res.data);
-        //   _this.userToken = 'Bearer ' + res.data.data.body.token;
+        //   _this.userToken = 'Bearer ' + res.data.data.login-body.token;
         //   // 将用户token保存到vuex中
         //   _this.changeLogin({ Authorization: _this.userToken });
         //   _this.$router.push('/home');
@@ -77,15 +78,14 @@ export default {
 .a {
 	text-decoration: none;
 }
-
-input,
-button {
+.loginBox input,
+.loginBox button {
 	background: transparent;
 	border: 0;
 	outline: none;
 }
 
-.body {
+.login-body {
     height: 100%;
 	background: linear-gradient(#141e30, #243b55);
 	display: flex;

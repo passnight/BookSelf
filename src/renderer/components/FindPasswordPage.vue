@@ -1,17 +1,17 @@
 <template>
-  <div class="body">
+  <div class="findPassword-body">
     <div class="findPasswordBox">
 		<h2>findPassword</h2>
 		<form action="">
 			<div class="item">
-				<input type="text" required>
+				<input type="text" required v-model="findPasswordForm.findPassword_username">
 				<label for="">userName</label>
 			</div>
 			<div class="item">
-				<input type="password" required>
+				<input type="text" required v-model="findPasswordForm.findPassword_email">
 				<label for="">email</label>
 			</div>
-			<button class="btn">submit
+			<button class="btn" type="button" @click="findPassword">submit
 				<span></span>
 				<span></span>
 				<span></span>
@@ -32,7 +32,45 @@
 
 <script>
 export default {
-  name: 'findPassword-page'
+  name: 'findPassword-page',
+  data () {
+    return {
+      findPasswordForm: {
+        findPassword_username: '',
+        findPasswordn_password: ''
+      },
+      findPasswordToken: ''
+    }
+  },
+  methods: {
+    findPassword () {
+	  var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      if (this.findPasswordForm.findPassword_username === '') {
+        alert('账号不能为空')
+      } else if (this.findPasswordForm.findPassword_email === '') {
+        alert('邮箱不能为空')
+      } else if (!regEmail.test(this.findPasswordForm.findPassword_email)) {
+        alert('邮箱格式错误')
+      } else {
+		alert('已发送邮件至邮箱，请从邮箱重置密码')
+        // this.axios({
+        //   method: 'post',
+        //   url: '/user/login',
+        //   data: _this.loginForm
+        // }).then(res => {
+        //   console.log(res.data);
+        //   _this.userToken = 'Bearer ' + res.data.data.body.token;
+        //   // 将用户token保存到vuex中
+        //   _this.changeLogin({ Authorization: _this.userToken });
+        //   _this.$router.push('/home');
+        //   alert('登陆成功');
+        // }).catch(error => {
+        //   alert('账号或密码错误');
+        //   console.log(error);
+        // });
+      }
+    }
+  }
 }
 </script>
 
@@ -41,14 +79,14 @@ export default {
 	text-decoration: none;
 }
 
-input,
-button {
+.findPasswordBox input,
+.findPasswordBox button {
 	background: transparent;
 	border: 0;
 	outline: none;
 }
 
-.body {
+.findPassword-body {
     height: 100%;
 	background: linear-gradient(#141e30, #243b55);
 	display: flex;
