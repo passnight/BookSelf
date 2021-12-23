@@ -33,11 +33,13 @@ class UserController:
         cursor.execute(
             f"select id from user where username='{request.args['username']}' and password='{request.args['password']}'"
         )
-        result = cursor.fetchone()[0]
+        result = cursor.fetchone()
         if result == None:
             return Response(code=400, data={"msg": "用户名或密码错误"}).toJson()
         else:
-            return Response(code=200, data={"msg": "登录成功", "user_id": result}).toJson()
+            return Response(
+                code=200, data={"msg": "登录成功", "user_id": result[0]}
+            ).toJson()
 
     @app.route("/user/register", methods=["GET"])
     def register():
@@ -58,28 +60,25 @@ class ShoppingBasketController:
     @app.route("/shopping_basket/add", methods=["GET"])
     def add():
         cursor.execute(
+            f"select * from check_out_list where `credit_card`='{request.args['credit_card']}' and `status`='waiting'"
+        )
+        result = cursor.fetchone()
+        if result != None:
+            return Response(code=400, data={"msg": "购物车已存在"}).toJson()
+        cursor.execute(
             f"INSERT INTO `check_out_list` (`credit_card`, `status`) VALUES ('{request.args['credit_card']}', 'waiting');"
         )
-        cursor.commit()
+        conn.commit()
         return Response(code=200, data={"msg": "创建购物车成功"}).toJson()
 
-    @app.route("/shoppingBasket/delete", methods=["GET"])
+    @app.route("/shopping_basket/delete", methods=["GET"])
     def delete():
         cursor.execute(
-            f"""
-DELETE FROM
-    `shopping_item` AS S,
-    `check_out_list` AS C
-WHERE
-    S.check_out_list_id = C.id
-    AND C.status = 'waiting'
-    AND S.owner_id = {request.args['owner_id']}
-                       """
-        )
+            f"DELETE S.*, C.* FROM `shopping_item` as SLEFT JOIN `check_out_list` as C ON S.check_out_list_id = C.id WHERE AND S.owner_id = {request.args['owner_id']};")
         conn.commit()
         return Response(code=200, data={"msg": "删除成功"}).toJson()
 
-    @app.route("/shoppingBasket/get", methods=["GET"])
+    @app.route("/shopping_basket/get", methods=["GET"])
     def get():
         cursor.execute(
             f"""SELECT C.id,S.id, S.book_isbn,S.quantities FROM `shopping_item` AS S, `check_out_list` AS C
@@ -174,21 +173,21 @@ WHERE
         )
         conn.commit()
         return Response(code=200, data={"msg": "添加成功"}).toJson()
-    
-    
 
 
 class SearchController:
     @app.route("/search/get", methods=["GET"])
     def search():
-        sql="SELECT `isbn`, `quality`, `title`, `author`, `price` FROM `book` WHERE 1=1"
-        if request.args['isbn']!=None:
-            sql+=" and isbn like '%"+request.args['isbn']+"%'"
-        if request.args['title']!=None:
-            sql+=" and title like '%"+request.args['title']+"%'"
-        if request.args['author']!=None:
-            sql+=" and author like '%"+request.args['author']+"%'"
-        bookList=[]
+        sql = (
+            "SELECT `isbn`, `quality`, `title`, `author`, `price` FROM `book` WHERE 1=1"
+        )
+        if request.args["isbn"] != None:
+            sql += " and isbn like '%" + request.args["isbn"] + "%'"
+        if request.args["title"] != None:
+            sql += " and title like '%" + request.args["title"] + "%'"
+        if request.args["author"] != None:
+            sql += " and author like '%" + request.args["author"] + "%'"
+        bookList = []
         for row in cursor.execute(sql):
             bookList.append(
                 {
@@ -200,5 +199,6 @@ class SearchController:
                 }
             )
         return Response(code=200, data={"bookList": bookList}).toJson()
+
 
 app.run(port="8848")
