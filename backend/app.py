@@ -59,7 +59,7 @@ class UserController:
 
 class ShoppingBasketController:
     @app.route("/shopping_basket/add", methods=["GET"])
-    def add():
+    def addShopingBasket():
         cursor.execute(
             f"select * from check_out_list where `credit_card`='{request.args['credit_card']}' and `status`='waiting'"
         )
@@ -75,7 +75,8 @@ class ShoppingBasketController:
     @app.route("/shopping_basket/delete", methods=["GET"])
     def delete():
         cursor.execute(
-            f"DELETE S.*, C.* FROM `shopping_item` as SLEFT JOIN `check_out_list` as C ON S.check_out_list_id = C.id WHERE AND S.owner_id = {request.args['owner_id']};")
+            f"DELETE S.*, C.* FROM `shopping_item` as SLEFT JOIN `check_out_list` as C ON S.check_out_list_id = C.id WHERE AND S.owner_id = {request.args['owner_id']};"
+        )
         conn.commit()
         return Response(code=200, data={"msg": "删除成功"}).toJson()
 
@@ -168,7 +169,7 @@ WHERE
         )
         checkOutListId = cursor.fetchone()[0]
         if checkOutListId == None:
-            return Response(code=400, data={"msg": "请先创建购物车"}).toJson()
+            return Response(code=400, data={"ms": "请先创建购物车"}).toJson()
         cursor.execute(
             f"INSERT INTO `database_course_project`.`shopping_item` (`quantities`, `book_isbn`, `owner_id`, `check_out_list_id`) VALUES (1, '{request.args['book_isbn']}', '{request.args['owner_id']}', {checkOutListId});"
         )
@@ -176,9 +177,9 @@ WHERE
         return Response(code=200, data={"msg": "添加成功"}).toJson()
 
 
-class SearchController:
-    @app.route("/search/get", methods=["GET"])
-    def search():
+class BookController:
+    @app.route("/book/search", methods=["GET"])
+    def searchBook():
         sql = (
             "SELECT `isbn`, `quality`, `title`, `author`, `price` FROM `book` WHERE 1=1"
         )
@@ -189,7 +190,9 @@ class SearchController:
         if request.args["author"] != None:
             sql += " and author like '%" + request.args["author"] + "%'"
         bookList = []
-        for row in cursor.execute(sql):
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        for row in result:
             bookList.append(
                 {
                     "isbn": row[0],
@@ -200,6 +203,26 @@ class SearchController:
                 }
             )
         return Response(code=200, data={"bookList": bookList}).toJson()
+
+    @app.route("/book/add", methods=["GET"])
+    def addBook():
+        cursor.execute(f"SELECT * FROM `book` WHERE isbn = '{request.args['isbn']}'")
+        result = cursor.fetchone()
+        if result != None:
+            return Response(code=400, data={"msg": "该书已存在"}).toJson()
+        sql = f"INSERT INTO `book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('{request.args['isbn']}', '{request.args['quality']}', '{request.args['title']}', '{request.args['author']}', {request.args['price']});"
+        cursor.execute(sql)
+        conn.commit()
+        return Response(code=200, data={"msg": "添加成功"}).toJson()
+    @app.route("/book/delete", methods=["GET"])
+    def deleteBook():
+        cursor.execute(f"SELECT * FROM `book` WHERE isbn = '{request.args['isbn']}'")
+        result = cursor.fetchone()
+        if result == None:
+            return Response(code=400, data={"msg": "该书不存在"}).toJson()
+        cursor.execute(F"DELETE FROM `book` WHERE isbn = '{request.args['isbn']}'")
+        conn.commit()
+        return Response(code=200, data={"msg": "删除成功"}).toJson()
 
 
 app.run(port="8848")
