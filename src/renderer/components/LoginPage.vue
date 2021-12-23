@@ -58,6 +58,7 @@ export default {
 			console.log(res.data);
           if (res.data.code == 200) {
             alert("login success");
+			      this.$store.commit("login",res.data.data.user_id)
           } else {
             alert("login fail");
           }

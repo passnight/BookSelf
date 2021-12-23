@@ -5,7 +5,7 @@
       <li><router-link to="/"><a href="#home" >主页</a></router-link></li>
       <li><router-link to="/search"><a href="#news">搜索</a></router-link></li>
       <li><router-link to="/shoppingCart"><a href="#contact">购物车</a></router-link></li>
-      <li><router-link to="/bookList"><a href="#about">书库列表</a></router-link></li>
+      <li><router-link to="/bookList"><a href="#about">书库</a></router-link></li>
     </ul>
   </div> 
 </template>

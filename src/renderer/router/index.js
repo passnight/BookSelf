@@ -30,11 +30,6 @@ export default new Router({
       component: require('@/components/RegisterPage').default
     },
     {
-      path: '/findPassword',
-      name: 'findPassword-page',
-      component: require('@/components/FindPasswordPage').default
-    },
-    {
       path: '/bookList',
       name: 'bookList-page',
       component: require('@/components/BookListPage').default

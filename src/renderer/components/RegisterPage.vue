@@ -7,10 +7,6 @@
 				<input type="text" required v-model="registerForm.username">
 				<label for="">userName</label>
 			</div>
-			<div class="item">
-				<input type="text" required v-model="registerForm.email">
-				<label for="">email</label>
-			</div>
             <div class="item">
 				<input type="password" required v-model="registerForm.password">
 				<label for="">password</label>
@@ -31,48 +27,43 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'register-page',
   data () {
     return {
       registerForm: {
         username: '',
-        password: '',
-        email: ''
+        password: ''
       }
     }
   },
   methods: {
     register () {
-      var passwordreg = /(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{6,16}/
-      var regEmail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+      var passwordreg = /^[0-9A-Z]*$/
       if (this.registerForm.username === '') {
         alert('账号不能为空')
       } else if (this.registerForm.password === '') {
         alert('密码不能为空')
-      } else if (this.registerForm.email === '') {
-        alert('邮箱不能为空')
-      } else if (!regEmail.test(this.registerForm.email)) {
-        alert('邮箱格式错误')
       } else if (!passwordreg.test(this.registerForm.password)) {
         alert('密码只能由字母和数字组成')
       } else {
-        alert('pass')
-        // this.axios({
-        //   method: 'post',
-        //   url: '/user/login',
-        //   data: _this.loginForm
-        // }).then(res => {
-        //   console.log(res.data);
-        //   _this.userToken = 'Bearer ' + res.data.data.search-body.token;
-        //   // 将用户token保存到vuex中
-        //   _this.changeLogin({ Authorization: _this.userToken });
-        //   _this.$router.push('/home');
-        //   alert('登陆成功');
-        // }).catch(error => {
-        //   alert('账号或密码错误');
-        //   console.log(error);
-        // });
+        axios
+        .get("/user/register", {
+          params: {
+            username: this.registerForm.username,
+            password: this.registerForm.password,
+          },
+        })
+        .then((res) => {
+			console.log(res.data);
+          if (res.data.code == 200) {
+            alert("注册成功");
+			this.$router.push('/login')
+          } else {
+            alert("用户已存在");
+          }
+        });
       }
     }
   }

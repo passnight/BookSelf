@@ -29,6 +29,14 @@ router.beforeEach((to, from, next) => {
         alert(user.userId)
         next()
       }
+  } else if ( to.path === '/bookDetail') {
+    var detailId= store.getters.bookDetail
+    if (detailId === -1){
+      alert(发生错误)
+      next('/bookList')
+    } else {
+      next()
+    }
   } else {
     next()
   }

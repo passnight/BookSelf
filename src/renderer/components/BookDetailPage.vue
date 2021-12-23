@@ -4,7 +4,7 @@
       <img src="../assets/book_picture.jpg">
 
       <div class="book-detail">
-        <div>书名：
+        <div>书名：{{book_title}}
           <div  class="book-title" >
           </div>
         </div>
@@ -35,12 +35,19 @@ export default {
   name: 'bookDetail-page',
   data () {
     return {
-      book_title: ''
+      book_title: this.$store.state.bookList[this.$store.state.bookDetailId].title
     }
   },
   methods: {
     addShoppingCar () {
       alert("加入购物车成功")
+      var book={
+        title: '',
+        author: '',
+        ISBN: '',
+        price: ''
+      }
+      this.$store.commit("addCar",book)
     }
   }
 }
