@@ -1,16 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+// import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
-class User {
+// @Entity()
+// class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+//     @PrimaryGeneratedColumn()
+//     id: number;
 
-    @Column("varchar")
-    username: string;
+//     @Column("varchar")
+//     username: string;
 
-    @Column("varchar")
-    password: string;
-}
+//     @Column("varchar")
+//     password: string;
+// }
 
-export default User;
+// export default User;

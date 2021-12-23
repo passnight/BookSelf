@@ -29,6 +29,7 @@ class Response:
 
 class UserController:
     @app.route("/user/login", methods=["GET"])
+    @cross_origin(supports_credentials=True)
     def login():
         cursor.execute(
             f"select id from user where username='{request.args['username']}' and password='{request.args['password']}'"

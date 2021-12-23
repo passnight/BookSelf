@@ -1,9 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
-import initExpress from './Controller.ts'
 
-initExpress();
 
 /**
  * Set `__static` path to static files in production
