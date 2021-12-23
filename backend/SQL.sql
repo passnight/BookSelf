@@ -18,7 +18,9 @@ CREATE TABLE `check_out_list`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `credit_card` VARCHAR(255),
     `status` VARCHAR(255),
-    PRIMARY KEY (`id`)
+    `user_id` INT,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 );
 
 CREATE TABLE `book_stock` (
@@ -33,10 +35,8 @@ CREATE TABLE `shopping_item` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `quantities` INT NULL,
     `book_isbn` VARCHAR(255) NULL,
-    `owner_id` INT NULL,
     `check_out_list_id` INT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`owner_id`) REFERENCES `user`(`id`),
     FOREIGN KEY (`book_isbn`) REFERENCES `book`(`isbn`),
     FOREIGN KEY (`check_out_list_id`) REFERENCES `check_out_list`(`id`)
 );
