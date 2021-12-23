@@ -48,3 +48,8 @@ INSERT INTO `database_course_project`.`user` (`username`, `password`) VALUES ('n
 INSERT INTO `database_course_project`.`book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('1', 'good', 'book1', 'author of book1', '998');
 INSERT INTO `database_course_project`.`book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('2', 'normal', 'book2', 'author of book2', '100');
 INSERT INTO `database_course_project`.`book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('3', 'bad', 'book3', 'author of book 3', '10');
+
+
+INSERT INTO `database_course_project`.`book_stock` (`book_isbn`, `number`) VALUES ('1', '100');
+INSERT INTO `database_course_project`.`book_stock` (`book_isbn`, `number`) VALUES ('2', '100');
+INSERT INTO `database_course_project`.`book_stock` (`book_isbn`, `number`) VALUES ('3', '100');

@@ -69,33 +69,33 @@ class ShoppingBasketController:
         return Response(code=200, data={"msg": "创建购物车成功"}).toJson()
 
 
-#TODO: 等完成item类后再完成，以便测试
-    @app.route("/shopping_basket/delete", methods=["GET"])
+    @app.route("/shopping_basket/clear", methods=["GET"])
     def delete():
-        cursor.execute(F"select * from check_out_list where `user_id`='{request.args['user_id']}' and `status`='waiting'")
+        cursor.execute(F"SELECT `id` FROM `check_out_list` WHERE `user_id` = {request.args['user_id']} AND `status`='waiting';")
         result = cursor.fetchone()
         if result == None:
             return Response(code=400, data={"msg": "购物车不存在"}).toJson()
-        cursor.execute(
-            f"DELETE S.*, C.* FROM `shopping_item` as S LEFT JOIN `check_out_list` as C ON S.check_out_list_id = C.id WHERE AND S.owner_id = {request.args['owner_id']};"
-        )
+        cursor.execute(F"DELETE FROM `shopping_item` WHERE `check_out_list_id` = {result[0]}")
         conn.commit()
-        return Response(code=200, data={"msg": "删除成功"}).toJson()
+        conn.commit()
+        return Response(code=200, data={"msg": "清空购物车成功"}).toJson()
 
-#TODO: 等完成item类后再完成，以便测试
     @app.route("/shopping_basket/get", methods=["GET"])
     def getShoppingBasket():
-        cursor.execute(
-            f"SELECT C.id,S.id, S.book_isbn,S.quantities FROM `shopping_item` AS S, `check_out_list` AS C WHERE S.check_out_list_id = C.id AND C.status = 'waiting' AND S.owner_id = {request.args['owner_id']}")
-        checkoutListId = cursor.fetchone()[0]
-        bookList = []
-        for row in cursor.fetchall():
-            bookList.append(
-                {"item_id": row[1], "book_isbn": row[2], "quantities": row[3]}
-            )
-        return Response(
-            code=200, data={"checkoutListId": checkoutListId, "bookList": bookList}
-        ).toJson()
+        cursor.execute(F"SELECT C.id,S.id,S.book_isbn,S.quantities,C.credit_card FROM `check_out_list` AS C, `shopping_item` AS S WHERE C.user_id={request.args['user_id']} AND C.status='waiting' AND S.check_out_list_id=C.id")
+        bookList = cursor.fetchall()
+        if bookList.__len__() <= 0:
+            return Response(code=400, data={"msg": "购物车为空或不存在"}).toJson()        
+        checkOutListId = bookList[0][0]
+        checkOutList=[]
+        for row in bookList:
+            checkOutList.append({
+                "item_id": row[1],
+                "book_isbn": row[2],
+                "quantities": row[3]
+            })
+        creditCard = bookList[0][4]
+        return Response(code=200, data={"msg": "获取购物车成功", "check_out_list_id": checkOutListId, "check_out_list": checkOutList, "credit_card": creditCard}).toJson()
 
     @app.route("/shopping_basket/abort", methods=["GET"])
     def abortShoppingBasket():
@@ -107,16 +107,30 @@ class ShoppingBasketController:
         conn.commit()
         return Response(code=200, data={"msg": "取消成功"}).toJson()
 
-#TODO: 等完成item类后再完成，以便测试
     @app.route("/shopping_basket/pay", methods=["GET"])
     def payShoppingBasket():
-        cursor.execute(F"select * from check_out_list where `id`={request.args['check_out_list_id']} AND `status`='waiting'")
-        result = cursor.fetchone()
-        if result == None:
-            return Response(code=400, data={"msg": "代付款状态购物车不存在"}).toJson()
-        cursor.execute(F"UPDATE `check_out_list` SET `status` = 'abort' WHERE (`id` = '{request.args['check_out_list_id']}');")
+        cursor.execute(F"SELECT C.id,S.id,S.book_isbn,S.quantities,C.credit_card FROM `check_out_list` AS C, `shopping_item` AS S WHERE C.user_id={request.args['user_id']} AND C.status='waiting' AND S.check_out_list_id=C.id")
+        bookList = cursor.fetchall()
+        if bookList.__len__() <= 0:
+            return Response(code=400, data={"msg": "购物车为空或不存在"}).toJson()     
+        checkOutListId = bookList[0][0]   
+        checkOutList=[]
+        for row in bookList:
+            checkOutList.append({
+                "item_id": row[1],
+                "book_isbn": row[2],
+                "quantities": row[3]
+            })
+            cursor.execute(F"SELECT `number` FROM book_stock WHERE `book_isbn`='{row[2]}';")
+            stock = cursor.fetchone()[0]
+            cursor.execute(F"UPDATE `book_stock` SET `number` = {stock - row[3]} WHERE (`book_isbn` = '{row[2]}');")
+            if row[3] > stock:
+                conn.rollback()
+                return Response(code=400, data={"msg": "库存不足"}).toJson()
+        cursor.execute(F"UPDATE `check_out_list` SET `status` = 'success' WHERE (`id` = {checkOutListId});")
+        
         conn.commit()
-        return Response(code=200, data={"msg": "付款成功"}).toJson()
+        return Response(code=200, data={"msg": "支付成功"}).toJson()
 
     @app.route("/shopping_basket/add_item", methods=["GET"])
     def addItem():
@@ -141,22 +155,24 @@ class ShoppingBasketController:
 
     @app.route("/shopping_basket/update_item", methods=["GET"])
     def updateItem():
-        cursor.execute(
-            f"""
-UPDATE 
-    `shopping_item`
-SET quantities = {request.args['quantities']}
-WHERE
-    id = {request.args['item_id']}"""
-        )
+        cursor.execute(F"SELECT * FROM `check_out_list` AS C, `shopping_item` AS S WHERE C.user_id={request.args['user_id']} AND C.status='waiting' AND S.check_out_list_id=C.id AND S.book_isbn = '{request.args['book_isbn']}'")
+        bookInBasket = cursor.fetchone()
+        if bookInBasket == None:
+            return Response(code=400, data={"msg": "书籍不在购物车当中"}).toJson()
+        cursor.execute(F"UPDATE `check_out_list` AS C, `shopping_item` AS S SET S.quantities = {request.args['number']}  WHERE C.user_id={request.args['user_id']} AND C.status='waiting' AND S.check_out_list_id=C.id AND S.book_isbn = '{request.args['book_isbn']}'")
         conn.commit()
-        return Response(code=200, data={"msg": "修改成功"}).toJson()
+        return Response(code=200, data={"msg": "更新成功"}).toJson()
+        
+        
+        
 
-    @app.route("/shopping_basket/deleteItem", methods=["GET"])
+    @app.route("/shopping_basket/delete_item", methods=["GET"])
     def deleteItem():
-        cursor.execute(
-            f"""DELETE FROM `shopping_item` WHERE id = {request.args['item_id']}"""
-        )
+        cursor.execute(F"SELECT * FROM shopping_item WHERE `id`={request.args['item_id']};")
+        bookInBasket = cursor.fetchone()
+        if bookInBasket == None:
+            return Response(code=400, data={"msg": "书籍不在购物车当中"}).toJson()
+        cursor.execute(F"DELETE FROM `shopping_item` WHERE `id`={request.args['item_id']};")
         conn.commit()
         return Response(code=200, data={"msg": "删除成功"}).toJson()
 
