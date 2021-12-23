@@ -18,7 +18,9 @@ CREATE TABLE `check_out_list`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `credit_card` VARCHAR(255),
     `status` VARCHAR(255),
-    PRIMARY KEY (`id`)
+    `user_id` INT,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 );
 
 CREATE TABLE `book_stock` (
@@ -33,10 +35,8 @@ CREATE TABLE `shopping_item` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `quantities` INT NULL,
     `book_isbn` VARCHAR(255) NULL,
-    `owner_id` INT NULL,
     `check_out_list_id` INT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`owner_id`) REFERENCES `user`(`id`),
     FOREIGN KEY (`book_isbn`) REFERENCES `book`(`isbn`),
     FOREIGN KEY (`check_out_list_id`) REFERENCES `check_out_list`(`id`)
 );
@@ -48,3 +48,8 @@ INSERT INTO `database_course_project`.`user` (`username`, `password`) VALUES ('n
 INSERT INTO `database_course_project`.`book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('1', 'good', 'book1', 'author of book1', '998');
 INSERT INTO `database_course_project`.`book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('2', 'normal', 'book2', 'author of book2', '100');
 INSERT INTO `database_course_project`.`book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('3', 'bad', 'book3', 'author of book 3', '10');
+
+
+INSERT INTO `database_course_project`.`book_stock` (`book_isbn`, `number`) VALUES ('1', '100');
+INSERT INTO `database_course_project`.`book_stock` (`book_isbn`, `number`) VALUES ('2', '100');
+INSERT INTO `database_course_project`.`book_stock` (`book_isbn`, `number`) VALUES ('3', '100');
