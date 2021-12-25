@@ -82,7 +82,7 @@ class ShoppingBasketController:
 
     @app.route("/shopping_basket/get", methods=["GET"])
     def getShoppingBasket():
-        cursor.execute(F"SELECT C.id,S.id,S.book_isbn,S.quantities,C.credit_card FROM `check_out_list` AS C, `shopping_item` AS S WHERE C.user_id={request.args['user_id']} AND C.status='waiting' AND S.check_out_list_id=C.id")
+        cursor.execute(F"SELECT B.title,B.price,C.id,S.id,S.book_isbn,S.quantities,C.credit_card FROM `book` AS B, `check_out_list` AS C, `shopping_item` AS S WHERE C.user_id={request.args['user_id']} AND C.status='waiting' AND S.check_out_list_id=C.id AND B.isbn=S.book_isbn")
         bookList = cursor.fetchall()
         if bookList.__len__() <= 0:
             return Response(code=400, data={"msg": "购物车为空或不存在"}).toJson()        
@@ -90,9 +90,11 @@ class ShoppingBasketController:
         checkOutList=[]
         for row in bookList:
             checkOutList.append({
-                "item_id": row[1],
-                "book_isbn": row[2],
-                "quantities": row[3]
+                "title": row[0],
+                "price": row[1],
+                "item_id": row[3],
+                "book_isbn": row[4],
+                "quantities": row[5]
             })
         creditCard = bookList[0][4]
         return Response(code=200, data={"msg": "获取购物车成功", "check_out_list_id": checkOutListId, "check_out_list": checkOutList, "credit_card": creditCard}).toJson()
