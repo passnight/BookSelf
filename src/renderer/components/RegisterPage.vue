@@ -94,7 +94,7 @@ export default {
 
 .registerBox {
 	width: 400px;
-	height: 426px;
+	height: 326px;
 	background-color: #0c1622;
 	margin: 190px auto;
 	border-radius: 10px;

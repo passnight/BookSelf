@@ -26,9 +26,32 @@ router.beforeEach((to, from, next) => {
         alert('请先登录')
         next('/login')
       } else {
-        alert(user.userId)
-        next()
+        axios
+        .get("/shopping_basket/get",{
+          params:{
+            user_id: user.userId
+          }
+        })
+        .then((res) => {
+			    console.log(res.data);
+          if (res.data.code == 200) {
+            store.state.car=res.data.data.check_out_list;
+            store.state.checkoutListId=res.data.data.check_out_list_id;
+            store.state.credit_card=res.data.data.credit_card;
+            store.state.isCarEmpty=false
+            next()
+          } else {
+            alert("支付方式未完善或购物车为空");
+          }
+        });
       }
+  } else if ( to.path === '/creatCar') {
+    if(store.state.user.userId === -1) {
+      alert('请先登录')
+      next('/login')
+    } else {
+      next()
+    }
   } else if ( to.path === '/bookDetail') {
     var detailId= store.getters.bookDetail
     if (detailId === -1){
@@ -36,6 +59,31 @@ router.beforeEach((to, from, next) => {
       next('/bookList')
     } else {
       next()
+    }
+  } else if ( to.path === '/bookList') {
+    if(store.state.isSearch == false)
+    {
+      store.state.isBookList = true;
+      axios
+        .get("/book/search",{
+          params:{
+            isbn: '',
+            title: '',
+            author: ''
+          }
+        })
+        .then((res) => {
+			    console.log(res.data);
+          if (res.data.code == 200) {
+            store.state.bookList=res.data.data.bookList;
+            next();
+          } else {
+            alert("出错了");
+            next("/");
+          }
+        });
+    } else {
+      next();
     }
   } else {
     next()

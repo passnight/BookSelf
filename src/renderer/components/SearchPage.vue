@@ -3,14 +3,19 @@
     <div class="searchBox">
 		  <h2>search</h2>
 		    <form action="">
+		  <div class="search-item">
+            <label for="">bookISBN</label>
+
+            <input  v-model="searchForm.isbn">
+          </div>
           <div class="search-item">
             <label>bookTitle</label>
-            <input v-model="searchForm.username">	
+            <input v-model="searchForm.booktitle">	
           </div>
           <div class="search-item">
             <label for="">bookAuthor</label>
 
-            <input  v-model="searchForm.email">
+            <input  v-model="searchForm.author">
           </div>
          
           <button type="button" class="search-btn" @click="search">submit
@@ -25,36 +30,39 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'search-page',
   data () {
     return {
       searchForm: {
-        username: '',
-        password: '',
-        email: ''
-      },
-      userToken: ''
+		isbn: '',
+        booktitle: '',
+        author: ''
+	  }
     }
   },
   methods: {
     search () {
-      // this.axios({
-      //   method: 'post',
-      //   url: '/user/login',
-      //   data: _this.loginForm
-      // }).then(res => {
-      //   console.log(res.data);
-      //   _this.userToken = 'Bearer ' + res.data.data.search-body.token;
-      //   // 将用户token保存到vuex中
-      //   _this.changeLogin({ Authorization: _this.userToken });
-      //   _this.$router.push('/home');
-      //   alert('登陆成功');
-      // }).catch(error => {
-      //   alert('账号或密码错误');
-      //   console.log(error);
-      // });
-      // }
+      axios
+        .get("/book/search",{
+          params:{
+            isbn: this.searchForm.isbn,
+            title: this.searchForm.booktitle,
+            author: this.searchForm.author
+          }
+        })
+        .then((res) => {
+			    console.log(res.data);
+          if (res.data.code == 200) {
+            this.$store.commit('updateBookList',res.data.data.bookList)
+			this.$store.commit('setSearchState',true)
+            this.$router.push('/bookList')
+          } else {
+            alert("出错了");
+			this.$router.push('/search')
+          }
+        });
     }
   }
 }
@@ -84,7 +92,7 @@ export default {
 
 .searchBox {
 	width: 400px;
-	height: 326px;
+	height: 426px;
 	background-color: #0c1622;
 	margin: 190px auto;
 	border-radius: 10px;

@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         //用户信息
+        isLogin: false,
         user: { 
             userId: -1,
             userName: '',
@@ -17,27 +18,43 @@ export default new Vuex.Store({
             title: '',
         },
         isBookList : true,
-        //搜索结果
+        //是否是搜索的结果？
+        isSearch : false,
+        //搜索结果（初始为本地测试数据）
         bookList : [{
+            isbn: '111',
+            quality: 'bad',
             title:'book1',
-            id: 0
+            author: 'chen',
+            price: "46"
         },{
+            isbn: '222',
+            quality: 'good',
             title:'book2',
-            id: 1
-        },{
-            title:'book3',
-            id: 2
+            author: 'rao',
+            price: "88"
         }],
         //详情页书Id
         bookDetailId : -1,
         // 购物车 本地存储，防止数据丢失
         car : [],
+        //购物车是否为空
+        isCarEmpty: true,
         // 总价
-        detailBookId: -1
+        checkoutList: [],
+        checkoutListId: -1,
+        credit_card: '',
+        isHavePayWay: false
     },
     getters: {
         bookList(state) {
             return state.bookList;
+        },
+        checkoutList(state) {
+            return state.checkoutList
+        },
+        car(state) {
+            return state.car;
         },
         user (state) {
             return state.user;
@@ -61,18 +78,39 @@ export default new Vuex.Store({
     mutations: {
         //登录成功
         login(state, userId) {
+            state.isLogin=true;
             state.user.userId=userId;
         },
-        //添加书目
-        addBookList(state, book) {
-            state.bookList.push(book);
+        //更新书库 && 搜索结果
+        updateBookList(state, list) {
+            state.bookList=list;
+            if(state.bookList.length === 0)
+                state.isBookList= false;
+            else
+                state.isBookList= true;
+        },
+        //设置当前是否是搜索
+        setSearchState(state,search){
+            state.isSearch=search;
         },
         //添加详情页书目id
         setBookDetail(state,id) {
             state.bookDetailId=id;
         },
+        //添加到购物车
         addCar(state,book){
+            if(state.isCarEmpty == true)
+                state.isCarEmpty=false
+            for(var i=0;i<state.car.length;i++)
+                if(state.car[i].isbn == book.isbn) {
+                    state.car[i].quantity++
+                    return
+                }
             state.car.push(book)
+        },
+        //更新购物车
+        updateCar(state,car){
+            state.car=car;
         }
     },
     actions: {

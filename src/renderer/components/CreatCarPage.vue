@@ -1,28 +1,20 @@
 import axios from 'axios';
 <template>
-  <div class="login-body">
-    <div class="loginBox">
-      <h2>login</h2>
+  <div class="creatCar-body">
+    <div class="creatCarBox">
+      <h2>way of payment</h2>
       <form action="">
         <div class="item">
-          <input type="text" required v-model="loginForm.login_username" />
-          <label for="">userName</label>
+          <input type="text" required v-model="credit_card" />
+          <label>credit_card</label>
         </div>
-        <div class="item">
-          <input type="password" required v-model="loginForm.login_password" />
-          <label for="">password</label>
-        </div>
-        <button type="button" class="login-btn" @click="login">
+        <button type="button" class="creatCar-btn" @click="creatCar">
           submit
           <span></span>
           <span></span>
           <span></span>
           <span></span>
         </button>
-        <div class="msg">
-          Don't have account?
-          <router-link to="/register"><a>sign up</a></router-link>
-        </div>
       </form>
     </div>
   </div>
@@ -31,33 +23,28 @@ import axios from 'axios';
 <script>
 import axios from "axios";
 export default {
-  name: "login-page",
+  name: "creatCar-page",
   data() {
     return {
-      loginForm: {
-        login_username: "",
-        login_password: "",
-      },
-      userToken: "",
+      credit_card: ''
     };
   },
   methods: {
-    login() {
+    creatCar() {
       axios
-        .get("/user/login", {
+        .get("/shopping_basket/add", {
           params: {
-            username: this.loginForm.login_username,
-            password: this.loginForm.login_password,
+            credit_card: this.credit_card,
+            user_id: this.$store.state.user.userId,
           },
         })
         .then((res) => {
 			    console.log(res.data);
           if (res.data.code == 200) {
-            alert("login success");
-			      this.$store.commit("login",res.data.data.user_id)
-            this.$router.push('/')
+            alert("成功");
+            this.$router.push('/checkout')
           } else {
-            alert("login fail");
+            alert("失败");
           }
         });
     },
@@ -69,14 +56,14 @@ export default {
 .a {
   text-decoration: none;
 }
-.loginBox input,
-.loginBox button {
+.creatCarBox input,
+.creatCarBox button {
   background: transparent;
   border: 0;
   outline: none;
 }
 
-.login-body {
+.creatCar-body {
   height: 100%;
   background: linear-gradient(#141e30, #243b55);
   display: flex;
@@ -86,9 +73,9 @@ export default {
   color: #03e9f4;
 }
 
-.loginBox {
+.creatCarBox {
   width: 400px;
-  height: 364px;
+  height: 264px;
   background-color: #0c1622;
   margin: 190px auto;
   border-radius: 10px;
@@ -132,7 +119,7 @@ h2 {
   transition: all 0.5s linear;
 }
 
-.login-btn {
+.creatCar-btn {
   padding: 10px 20px;
   margin-top: 10px;
   color: #03e9f4;
@@ -143,7 +130,7 @@ h2 {
   left: 35%;
 }
 
-.login-btn:hover {
+.creatCar-btn:hover {
   border-radius: 5px;
   color: #fff;
   background: #03e9f4;
@@ -152,11 +139,11 @@ h2 {
   transition: all 1s linear;
 }
 
-.login-btn > span {
+.creatCar-btn > span {
   position: absolute;
 }
 
-.login-btn > span:nth-child(1) {
+.creatCar-btn > span:nth-child(1) {
   width: 100%;
   height: 2px;
   background: -webkit-linear-gradient(left, transparent, #03e9f4);
@@ -172,7 +159,7 @@ h2 {
   }
 }
 
-.login-btn > span:nth-child(2) {
+.creatCar-btn > span:nth-child(2) {
   width: 2px;
   height: 100%;
   background: -webkit-linear-gradient(top, transparent, #03e9f4);
@@ -188,7 +175,7 @@ h2 {
   }
 }
 
-.login-btn > span:nth-child(3) {
+.creatCar-btn > span:nth-child(3) {
   width: 100%;
   height: 2px;
   background: -webkit-linear-gradient(left, #03e9f4, transparent);
@@ -204,7 +191,7 @@ h2 {
   }
 }
 
-.login-btn > span:nth-child(4) {
+.creatCar-btn > span:nth-child(4) {
   width: 2px;
   height: 100%;
   background: -webkit-linear-gradient(top, transparent, #03e9f4);

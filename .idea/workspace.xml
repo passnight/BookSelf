@@ -6,11 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="a65ecd9c-69cb-40c2-8ca6-941eb7c8e67c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/BookDetailPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BookDetailPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/BookListPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BookListPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/FindPasswordPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/CheckoutPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/CheckoutPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LoginPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/RegisterPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/RegisterPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/SearchPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/SearchPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/ShoppingCartPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/ShoppingCartPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/nav.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/router/index.js" afterDir="false" />

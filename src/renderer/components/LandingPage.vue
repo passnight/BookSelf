@@ -4,8 +4,14 @@
     <div class="frame">
       <h3>选择功能</h3>
       <form>
-        <router-link to="/login"><button>登录</button></router-link>
-        <router-link to="/register"><button>注册</button></router-link>
+        <div v-if="isLogin">
+          <h1>已登录</h1>
+        </div>
+
+        <div v-else>
+          <router-link to="/login"><button>登录</button></router-link>
+          <router-link to="/register"><button>注册</button></router-link>
+        </div>
       </form>
     </div>
   </div>
@@ -13,7 +19,12 @@
 
 <script>
 export default {
-  name: 'landing-page'
+  name: 'landing-page',
+  data() {
+    return {
+      isLogin:this.$store.state.isLogin
+    }
+  }
 }
 </script>
 

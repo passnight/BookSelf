@@ -43,6 +43,16 @@ export default new Router({
       path: '/shoppingCart',
       name: 'shoppingCart-page',
       component: require('@/components/ShoppingCartPage').default
+    },
+    {
+      path: '/checkout',
+      name: 'checkout-page',
+      component: require('@/components/CheckoutPage').default
+    },
+    {
+      path: '/creatCar',
+      name: 'creatCar-page',
+      component: require('@/components/CreatCarPage').default
     }
   ]
 })

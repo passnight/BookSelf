@@ -1,13 +1,19 @@
 <template>
   <div>
     <div v-if="isHave">
-
-    <!-- 搜索到结果 && 书库 -->
-    <div id="booklist">
-      <div v-for="item in booklist" v-bind:key="item.id"> 
-        {{item.title}} <router-link to="/bookDetail"><button @click="toDetail(item.id)" type="button">详情</button></router-link>
+      <div v-if="isSearch">
+        <h1>搜索结果如下：</h1>
       </div>
-    </div>
+      <div v-else>
+        <h1>书库如下：</h1>
+      </div>
+
+      <!-- 搜索到结果 && 书库 -->
+      <div id="booklist">
+        <div v-for="(item,index) in booklist" v-bind:key="index"> 
+          {{item.title}} <router-link to="/bookDetail"><button @click="toDetail(index)" type="button">详情</button></router-link>
+        </div>
+      </div>
 
     
     </div>
@@ -25,17 +31,28 @@ export default {
   data() {
     return {
       isHave: this.$store.state.isBookList,
-      booklist: this.$store.state.bookList
+      booklist: this.$store.state.bookList,
+      isSearch: this.$store.state.isSearch
     }
   },
   methods: {
     toDetail(id) {
       this.$store.commit("setBookDetail",id)
     }
+  },
+  destroyed: function () {
+    //离开页面时搜索重置
+    this.$store.commit('setSearchState',false)
   }
 }
 </script>
 
 <style>
-
+#booklist div{
+  font-size: 20px;
+  padding: 8px;
+}
+#booklist div button{
+  margin-left: 10px;
+}
 </style>
