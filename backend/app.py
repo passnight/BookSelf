@@ -207,3 +207,5 @@ class BookController:
                 }
             )
         return Response(code=200, data={"bookList": bookList}).toJson()
+
+app.run(port=8848)
