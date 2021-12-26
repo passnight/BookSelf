@@ -42,7 +42,7 @@ export default {
 			    console.log(res.data);
           if (res.data.code == 200) {
             alert("成功");
-            this.$router.push('/checkout')
+            this.$router.push('/')
           } else {
             alert("失败");
           }

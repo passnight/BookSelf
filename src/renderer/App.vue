@@ -2,7 +2,7 @@
   <div id="app">
     <my-head></my-head>
     <my-nav></my-nav>
-    <router-view v-if="isRouterAlive"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 

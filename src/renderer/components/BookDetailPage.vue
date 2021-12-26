@@ -71,7 +71,10 @@ export default {
       this.$router.push('/bookList')
     },
     addShoppingCar () {
-      axios
+      if(this.$store.state.user.userId === -1)
+        alert("请先登录")
+      else {
+        axios
         .get("/shopping_basket/add_item", {
           params: {
             user_id: this.$store.state.user.userId,
@@ -88,7 +91,7 @@ export default {
             else if(res.data.data.msg === "书已存在购物车中")
               alert('此书已在购物车中')
           }
-        });
+        });}
       
     }
   }

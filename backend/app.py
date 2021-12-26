@@ -207,37 +207,3 @@ class BookController:
                 }
             )
         return Response(code=200, data={"bookList": bookList}).toJson()
-
-    @app.route("/book/add", methods=["GET"])
-    def addBook():
-        cursor.execute(f"SELECT * FROM `book` WHERE isbn = '{request.args['isbn']}'")
-        result = cursor.fetchone()
-        if result != None:
-            return Response(code=400, data={"msg": "该书已存在"}).toJson()
-        cursor.execute(F"INSERT INTO `book` (`isbn`, `quality`, `title`, `author`, `price`) VALUES ('{request.args['isbn']}', '{request.args['quality']}', '{request.args['title']}', '{request.args['author']}', {request.args['price']});")
-        cursor.execute(F"INSERT INTO `book_stock` (`book_isbn`, `number`) VALUES ('{request.args['isbn']}', 100);")
-        conn.commit()
-        return Response(code=200, data={"msg": "添加成功"}).toJson()
-    
-    
-    @app.route("/book/delete", methods=["GET"])
-    def deleteBook():
-        sql = F"SELECT * FROM `book` WHERE isbn = '{request.args['isbn']}'"
-        cursor.execute(sql)
-        result = cursor.fetchone()
-        if result == None:
-            return Response(code=400, data={"msg": "该书不存在"}).toJson()
-        cursor.execute(F"DELETE FROM `book_stock` WHERE book_isbn = '{request.args['isbn']}';")
-        cursor.execute(F"DELETE FROM `book` WHERE isbn = '{request.args['isbn']}';")
-        conn.commit()
-        return Response(code=200, data={"msg": "删除成功"}).toJson()
-
-class BookStockController:
-    @app.route("/bookStock/set", methods=["POST"])
-    def setBookStock():
-        stockList = request.json["stockList"]
-        for row in stockList:
-            cursor.execute(F"UPDATE `book_stock` SET `number` = {row['number']} WHERE `book_isbn` = '{row['book_isbn']}';")
-        conn.commit()
-        return Response(code=200, data={"msg": "设置库存量成功"}).toJson()
-app.run(port="8848")

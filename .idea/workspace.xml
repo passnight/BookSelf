@@ -9,17 +9,9 @@
       <change beforePath="$PROJECT_DIR$/backend/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/BookDetailPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BookDetailPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/BookListPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/BookListPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/CheckoutPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/CheckoutPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LandingPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/LoginPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/components/CreatCarPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/CreatCarPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/renderer/components/RegisterPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/RegisterPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/SearchPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/SearchPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/ShoppingCartPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/ShoppingCartPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/components/nav.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/components/nav.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/store.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

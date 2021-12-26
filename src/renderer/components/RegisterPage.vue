@@ -19,7 +19,7 @@
 			</button>
             <div class="msg">
                 Already have account?
-                <router-link to="/login"><a>register</a></router-link>
+                <router-link to="/login"><a>login in</a></router-link>
             </div>
 		</form>
 	</div>

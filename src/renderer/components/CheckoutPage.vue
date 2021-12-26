@@ -80,7 +80,7 @@ export default {
             alert("支付成功");
             this.$router.push("/")
           } else {
-            
+            alert("出错了，请重试")
           }
         });
       }
